@@ -27,7 +27,7 @@ def upperCaseFirstLetterName(gedcomFilename, outputFilename = None):
     newLines = [gg.sub(repl_func, line) for line in lines]
     if outputFilename is None:
         outputFilename = os.path.splitext(gedcomFilename)[0] + '_WithUpperCase.ged'
-    open(outputFilename, 'w').writelines('\n'.join(newLines))
+    open(outputFilename, 'w', encoding='utf-8').writelines('\n'.join(newLines))
 
 if __name__ == '__main__':
     import argparse

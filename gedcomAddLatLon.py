@@ -16,12 +16,14 @@ def addLatLon(gedcomFilename, outputFilename = None):
     cacheLatLonFilename ='citiesLatLon.txt'
     import os
     from geopy.geocoders import Nominatim
+    import geopy.geocoders
+    geopy.geocoders.options.default_user_agent = "HayesFamilyTreegeoloc"
     getLatStr = lambda lat: ('N' if lat>0 else 'S') + str(abs(lat))
     getLonStr = lambda lon: ('E' if lon>0 else 'W') + str(abs(lon))
 
     def loadCitiesLatLon(filename = cacheLatLonFilename):
         if not os.path.exists(filename): return {}
-        lines = [c.strip() for c in open(filename,'r', encoding='utf-8').readlines()]
+        lines = [c.strip() for c in open(filename,'r').readlines()]
         data=[lines[i-1] + ':' + lines[i][1:-1] for i in range(len(lines)) if lines[i].startswith('(')]
         d={}
         for line in data:
@@ -74,7 +76,7 @@ def addLatLon(gedcomFilename, outputFilename = None):
     saveCitiesLatLon(cities, filename = cacheLatLonFilename)
     if outputFilename is None:
         outputFilename = os.path.splitext(gedcomFilename)[0]+'_WithLatLon.ged'
-    open(outputFilename, 'w').writelines('\n'.join(newLines))
+    open(outputFilename, 'w', encoding='utf-8').writelines('\n'.join(newLines))
 
 if __name__ == '__main__':
     import argparse

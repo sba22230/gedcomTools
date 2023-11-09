@@ -16,12 +16,13 @@ import gedcom
 import networkx as nx
 import os
 
-def gedcom2gephi(gedcomFilename='gedcom.ged', gephiFilename=None):
+def gedcom2gephi(gedcomFilename='my_gedcom_file.ged', gephiFilename=None):
     getName = lambda n: n.name[0]+' '+n.name[1]
     getId = lambda n: n.id[1:-1]
     getFamilyName = lambda n: n.name[1]
 
     g = gedcom.parse(gedcomFilename)
+    #g = gedcom.parse_filename(gedcomFilename)
     dg = nx.DiGraph()
     for p in g.individuals:
         if p.id not in dg:
