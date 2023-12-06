@@ -13,6 +13,7 @@
 # Be careful, this package may collide with python-gedcom.
 
 import gedcom
+import gedcom7
 import networkx as nx
 import os
 
@@ -21,8 +22,10 @@ def gedcom2gephi(gedcomFilename='my_gedcom_file.ged', gephiFilename=None):
     getId = lambda n: n.id[1:-1]
     getFamilyName = lambda n: n.name[1]
 
-    g = gedcom.parse(gedcomFilename)
-    #g = gedcom.parse_filename(gedcomFilename)
+    #g = gedcom.parse(gedcomFilename)
+    with open(gedcomFilename, "r", encoding="utf-8") as f:
+        s = f.read()
+    g = gedcom7.loads(s)
     dg = nx.DiGraph()
     for p in g.individuals:
         if p.id not in dg:
